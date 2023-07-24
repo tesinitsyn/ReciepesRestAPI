@@ -15,6 +15,9 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "recipe_name")
+    private String recipeName;
+
     @Column(name = "ingredients")
     private String ingredients;
 

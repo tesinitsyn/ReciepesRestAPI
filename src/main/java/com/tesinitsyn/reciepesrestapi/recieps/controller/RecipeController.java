@@ -2,6 +2,7 @@ package com.tesinitsyn.reciepesrestapi.recieps.controller;
 
 import com.tesinitsyn.reciepesrestapi.recieps.model.Recipe;
 import com.tesinitsyn.reciepesrestapi.recieps.service.RecipeCRUDOperationsService;
+import com.tesinitsyn.reciepesrestapi.recieps.service.RecipeScrapeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,18 @@ import java.util.Optional;
 @RequestMapping("/api/recipes")
 public class RecipeController {
     private final RecipeCRUDOperationsService recipeCRUDOperationsService;
+    private final RecipeScrapeService recipeScrapeService;
 
-    public RecipeController(RecipeCRUDOperationsService recipeCRUDOperationsService) {
+
+    public RecipeController(RecipeCRUDOperationsService recipeCRUDOperationsService, RecipeScrapeService recipeScrapeService) {
         this.recipeCRUDOperationsService = recipeCRUDOperationsService;
+        this.recipeScrapeService = recipeScrapeService;
+    }
+
+    @PostMapping("/testScraper")
+    public ResponseEntity<Void> testScraper(@RequestBody String url){
+        recipeScrapeService.scrape(url);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/getAll")
