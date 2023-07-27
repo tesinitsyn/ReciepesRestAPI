@@ -35,6 +35,7 @@ public class RecipeCRUDOperationsService {
             existingRecipe.setDescription(recipe.getDescription());
             existingRecipe.setTimeToCook(recipe.getTimeToCook());
             existingRecipe.setRecipeRating(recipe.getRecipeRating());
+            existingRecipe.setRecipeName(recipe.getRecipeName());
             return recipeRepository.save(existingRecipe);
         }else{
             return null;

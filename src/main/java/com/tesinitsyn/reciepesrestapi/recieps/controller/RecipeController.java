@@ -22,10 +22,10 @@ public class RecipeController {
         this.recipeScrapeService = recipeScrapeService;
     }
 
-    @PostMapping("/testScraper")
-    public ResponseEntity<Void> testScraper(@RequestBody String url){
-        recipeScrapeService.scrape(url);
-        return ResponseEntity.ok().build();
+    @PostMapping("/addRecipeFromWeb")
+    public ResponseEntity<Recipe> testScraper (@RequestBody String url){
+        Recipe createRecipe = recipeCRUDOperationsService.createRecipe(recipeScrapeService.scrape(url));
+        return ResponseEntity.status(HttpStatus.CREATED).body(createRecipe);
     }
 
     @GetMapping("/getAll")
