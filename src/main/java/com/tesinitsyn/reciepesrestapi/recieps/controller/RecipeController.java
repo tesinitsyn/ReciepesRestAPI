@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/recipes")
+@RequestMapping("/api/recipe")
 public class RecipeController {
     private final RecipeCRUDOperationsService recipeCRUDOperationsService;
     private final RecipeScrapeService recipeScrapeService;
