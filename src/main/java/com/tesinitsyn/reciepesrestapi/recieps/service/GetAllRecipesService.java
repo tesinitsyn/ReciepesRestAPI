@@ -12,7 +12,7 @@ public class GetAllRecipesService {
         this.recipeRepository = recipeRepository;
     }
 
-    public List<Recipe> getAllRecipes(){
+    public List<Recipe> getAllRecipes() {
         return recipeRepository.findAll();
     }
 }

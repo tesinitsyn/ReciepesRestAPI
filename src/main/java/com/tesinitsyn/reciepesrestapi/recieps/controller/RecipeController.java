@@ -22,49 +22,57 @@ public class RecipeController {
         this.recipeScrapeService = recipeScrapeService;
     }
 
-    @PostMapping("/addRecipeFromWeb")
-    public ResponseEntity<Recipe> testScraper (@RequestBody String url){
-        Recipe createRecipe = recipeCRUDOperationsService.createRecipe(recipeScrapeService.scrape(url));
-        return ResponseEntity.status(HttpStatus.CREATED).body(createRecipe);
-    }
 
     @GetMapping("/getAll")
-    public List<Recipe> getAllRecipes(){
+    public List<Recipe> getAllRecipes() {
         return recipeCRUDOperationsService.getAllRecipe();
     }
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<Recipe> getRecipeById(@PathVariable Long id){
+    public ResponseEntity<Recipe> getRecipeById(@PathVariable Long id) {
         Optional<Recipe> recipeOptional = recipeCRUDOperationsService.getRecipeById(id);
         return recipeOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/getMapping")
+    public List<Recipe> getBestRecipes(){
+        return recipeCRUDOperationsService.getBestRecipes();
+    }
+
     @PostMapping("/addRecipe")
-    public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe){
+    public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe) {
         Recipe createRecipe = recipeCRUDOperationsService.createRecipe(recipe);
         return ResponseEntity.status(HttpStatus.CREATED).body(createRecipe);
     }
 
+    @PostMapping("/addRecipeFromWeb")
+    public ResponseEntity<Recipe> testScraper(@RequestBody String url) {
+        Recipe createRecipe = recipeCRUDOperationsService.createRecipe(recipeScrapeService.scrape(url));
+        return ResponseEntity.status(HttpStatus.CREATED).body(createRecipe);
+    }
+
     @PutMapping("/updateRecipe/{id}")
-    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe){
+    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe) {
         Recipe updatedRecipe = recipeCRUDOperationsService.updateRecipe(id, recipe);
-        if(updatedRecipe != null){
+        if (updatedRecipe != null) {
             return ResponseEntity.ok(updatedRecipe);
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
 
     }
 
     @DeleteMapping("deleteRecipe/{id}")
-    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id){
+    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
         recipeCRUDOperationsService.deleteRecipe(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/deleteAllRecipes")
-    public ResponseEntity<Void> deleteAllRecipe(){
+    public ResponseEntity<Void> deleteAllRecipe() {
         recipeCRUDOperationsService.deleteAllRecipes();
         return ResponseEntity.noContent().build();
     }
+
+
 }

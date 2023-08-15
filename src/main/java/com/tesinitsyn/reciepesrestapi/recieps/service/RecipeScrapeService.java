@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RecipeScrapeService {
 
-    public Recipe scrape(final String url){
+    public Recipe scrape(final String url) {
         final ChromeOptions chromeOptions = new ChromeOptions();
         final ChromeDriver chromeDriver = new ChromeDriver(chromeOptions.addArguments("--headless"));
         Recipe recipeFromScraper = new Recipe();
@@ -35,14 +35,13 @@ public class RecipeScrapeService {
         recipeFromScraper.setTimeToCook(timeToCookWeb.getText());
 
 
-
-        try{
+        try {
             WebElement ratingWeb = chromeDriver.findElement(By.id("aggregate-star-rating__stars_1-0"));
             List<WebElement> ratingCounter = new ArrayList<>(ratingWeb.findElements(By.className("active")));
-            recipeFromScraper.setRecipeRating(String.valueOf(ratingCounter.size()));
+            //recipeFromScraper.setRecipeRating(String.valueOf(ratingCounter.size()));
             rating = String.valueOf(ratingCounter.size());
-        }catch (WebDriverException e){
-            recipeFromScraper.setRecipeRating("No rating for this recipe");
+        } catch (WebDriverException e) {
+            //recipeFromScraper.setRecipeRating("No rating for this recipe");
             rating = "No rating for this recipe";
         }
 
@@ -57,8 +56,7 @@ public class RecipeScrapeService {
         description = descriptionWeb.getText();
 
 
-        System.out.println("recipeName: " + recipeName + "\n" + "timeToCook: " + timeToCook + "\n" + "description: " +
-                description + "\n" + "rating: " + rating);
+        System.out.println("recipeName: " + recipeName + "\n" + "timeToCook: " + timeToCook + "\n" + "description: " + description + "\n" + "rating: " + rating);
         System.out.println("Ingredients:");
         ingredients.forEach(i -> System.out.println(i.getText()));
         chromeDriver.close();

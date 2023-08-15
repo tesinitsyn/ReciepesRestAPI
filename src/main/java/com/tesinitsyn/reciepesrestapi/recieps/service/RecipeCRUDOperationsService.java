@@ -15,21 +15,24 @@ public class RecipeCRUDOperationsService {
         this.recipeRepository = recipeRepository;
     }
 
-    public List<Recipe> getAllRecipe(){
+    public List<Recipe> getAllRecipe() {
         return recipeRepository.findAll();
     }
 
-    public Optional<Recipe> getRecipeById(Long id){
+    public Optional<Recipe> getRecipeById(Long id) {
         return recipeRepository.findById(id);
     }
 
-    public Recipe createRecipe(Recipe recipe){
+    public List<Recipe> getBestRecipes(){
+        return recipeRepository.getRecipesWithRatingAbove4();
+    }
+    public Recipe createRecipe(Recipe recipe) {
         return recipeRepository.save(recipe);
     }
 
-    public Recipe updateRecipe(Long id, Recipe recipe){
+    public Recipe updateRecipe(Long id, Recipe recipe) {
         Optional<Recipe> recipeOptional = getRecipeById(id);
-        if(recipeOptional.isPresent()){
+        if (recipeOptional.isPresent()) {
             Recipe existingRecipe = recipeOptional.get();
             existingRecipe.setIngredients(recipe.getIngredients());
             existingRecipe.setDescription(recipe.getDescription());
@@ -37,16 +40,16 @@ public class RecipeCRUDOperationsService {
             existingRecipe.setRecipeRating(recipe.getRecipeRating());
             existingRecipe.setRecipeName(recipe.getRecipeName());
             return recipeRepository.save(existingRecipe);
-        }else{
+        } else {
             return null;
         }
     }
 
-    public void deleteRecipe(Long id){
+    public void deleteRecipe(Long id) {
         recipeRepository.deleteById(id);
     }
 
-    public void deleteAllRecipes(){
+    public void deleteAllRecipes() {
         recipeRepository.deleteAll();
     }
 }

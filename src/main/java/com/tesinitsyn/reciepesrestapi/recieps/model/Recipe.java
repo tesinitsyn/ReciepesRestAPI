@@ -28,6 +28,6 @@ public class Recipe {
     private String timeToCook;
 
     @Column(name = "recipe_rating")
-    private String recipeRating;
+    private float recipeRating;
 
 }
